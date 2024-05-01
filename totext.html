@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to text</title>
+    <link rel="stylesheet" href="totext.css">
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <h2>VOICE TO TEXT <span> CONVERTER</span></h2>
+            <p>Record your voice and get the text</p>
+        </div>
+        <div class="mid">
+            <textarea  id="mytext" readonly></textarea>
+        </div>
+        <div class="foot">
+            <button id="start"><i class="fa-sharp fa-solid fa-microphone"></i>Record</button>
+            <button id="stop">Stop</button>
+        </div>
+    </div>
+</body>
+
+<script>
+
+        
+    const button = document.querySelector("button")
+    const textarea = document.querySelector("textarea")
+
+   
+    //voice to text
+   const start = document.getElementById("start")
+   const stop = document.getElementById("stop")
+   const mytextarea = document.getElementById("mytext")
+  // mytextarea.textContent = "Hello there, how are you"
+
+  
+   window.SpeechRecognition = window.webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+    recognition.interimResults = true
+
+    recognition.addEventListener('result',(e) => {
+        const text = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        
+
+        mytextarea.textContent = text
+        //console.log(text)
+    })
+   start.addEventListener("click", () => {
+        recognition.start()
+   })
+   stop.addEventListener("click", () => {
+    recognition.stop()
+   })
+
+</script>
+ 
+</html>
